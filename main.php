@@ -4,11 +4,11 @@ require("Toro.php");
 
 class HelloHandler {
     function get() {
-        include "templates/buscador.php";
+        include "templates/search.php";
     }
 
     function post() {
-        include "templates/buscador.php";
+        include "templates/search.php";
         $nombre = $_POST["nombre"];
        
     }
