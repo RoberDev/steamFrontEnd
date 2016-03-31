@@ -8,16 +8,15 @@
 	<div style="text-align:center;" class="mdl-grid">
 	
 	<?php
+		
 		//Get the totally number of games that the user owns.
 		$var_id64 = $_POST['nombre'];
 		//Steam Key
 		$var_key = getenv('API_KEY');
-
+		
 		$json = file_get_contents('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$var_key.'&steamid='.$var_id64.'&include_appinfo=730&format=json');
 		$datos = json_decode($json,true);
 		$juegos = $datos["response"]["game_count"];
-		//Imprime todos los datos de la api:
-		//var_dump($juegos);
 
 		for ($i=0; $i < $juegos; $i++) {
 			$idJuego = $datos["response"]["games"][$i]["appid"];
