@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/css/epoch.min.css">
+    <title></title>
+  </head>
+  <body style="background-image: url(http://localhost:8080/static?imagen=grey.png)":>
+    <div>
+      <div style="float:left; width:33%">
+      <img src="http://localhost:8080/static?imagen=poli.png" style="border:solid; border-radius: 50%;float:center; height:100px;width:100px"></img>
+      </div>
+      <div style="text-align:center; display: inline-block; width:33%;">
+      <img src="http://localhost:8080/static?imagen=logoCSGO.png" style="height:100px; width:300px"></img>
+      </div>
+      <div style="float: right; width:33%">
+      <img src="http://localhost:8080/static?imagen=terro.png" style="float:right; border:solid; border-radius: 50%;float:center; height:100px;width:100px"></img>
+    </div>
+    </div>
+    {{#datos2}}
+    <div style="border:solid;width:100%">
+      Name:
+    <div style="text-align:center">
+      <figure style="display:inline-block; text-align:center; vertical-align: top;">
+      <img src="http://localhost:8080/static?imagen=dianaTiro.jpg" style="height:150px;width:150px"></img>
+      <figcaption style="text-align:center">  Total Kills: {{ total_kills }}</figcaption>
+      </figure>
+      <figure style="display:inline-block; text-align:center; vertical-align: top;">
+        <img src="http://localhost:8080/static?imagen=calavera.png" style="height:150px;width:150px"></img>
+        <figcaption style="text-align:center">Total Deadths: {{ total_deadths }}</figcaption>
+      </figure>
+      <figure style="display:inline-block; text-align:center; vertical-align: top;">
+        <img src="http://localhost:8080/static?imagen=starYellow.png" style="height:120px;width:120px"></img>
+        <figcaption style="align:rigth; text-align:center">Total MVP: {{ total_mpvs }}</figcaption>
+      </figure>
+      </div>
+    </div>
+
+    Segundo dato: {{ idJuego }}
+      <script type="text/javascript">
+         var valor_kills = "{{total_kills}}";
+      </script>
+    {{/datos2}}
+    <div id="pie" class="epoch category20" style="width: 400px; height: 400px">
+    </div>
+  </body>
+
+</html>
+<script>
+console.log(valor_kills);
+//  var a = "{{ idJuego }}";
+var pieData = [
+{ label: 'Slice 1', value: valor_kills },
+{ label: 'Slice 2', value: 1500 },
+{ label: 'Slice 3', value: 1500 }
+]
+
+$('#pie').epoch({
+    type: 'pie',
+    data: pieData
+});
+
+</script>

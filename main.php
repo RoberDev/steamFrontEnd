@@ -30,18 +30,17 @@ class HelloHandler {
           $arrayTexto = array();
 
           for ($i=0; $i < $juegos; $i++) {
-			         $idJuego = $datos["response"]["games"][$i]["appid"];
-			         $hashlogo = $datos["response"]["games"][$i]["img_logo_url"];
-			         $name = $datos["response"]["games"][$i]["name"];
-			          //Return the url from the respective image of the game id requested.
+			      $idJuego = $datos["response"]["games"][$i]["appid"];
+			      $hashlogo = $datos["response"]["games"][$i]["img_logo_url"];
+			      $name = $datos["response"]["games"][$i]["name"];
+			      //Return the url from the respective image of the game id requested.
 			      $text = "http://media.steampowered.com/steamcommunity/public/images/apps/".$idJuego."/".$hashlogo.".jpg";
             $text2 = "/stats?id64=".$var_id64."=?idJuego=". $idJuego;
-            $arrayTexto[$i] = array('idJuego'=>$text2, 'textGame'=>$text);
+            $arrayTexto[$i] = array('name'=>$name, 'idJuego'=>$text2, 'textGame'=>$text);
           }
 
           $template_data['datos']=  $arrayTexto;
           echo $template -> render($template_data);
-
     }
 }
 
@@ -52,18 +51,19 @@ class ApiHandler {
         $url = $_SERVER['REQUEST_URI'];
         $datosUrl = explode("=", $url);
         $idJuego = $datosUrl[3];
-
+        $var_key = getenv('API_KEY');
         if(isGameSupported($datosUrl[3])==true){
-            $template_stats = gameData($datosUrl[3], $datosUrl[1]);
-            $mustache = new Mustache_Engine(array(
-            'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/templates/games')));
-            $datosArray = array();
+          $template_stats = gameData($datosUrl[3], $datosUrl[1], $var_key);
+          $mustache = new Mustache_Engine(array(
+          'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/templates/games')));
+          //We use data array to send all data of the game that user selected to the template.
+          $template_data2['datos2'] =  $template_stats;
+          $template = $mustache->loadTemplate($idJuego);
+          echo $template -> render($template_data2);
 
-            $datosArray[] = array('idJuego'=>5);
-            $template_data2['datos2']=  $datosArray;
-            $template = $mustache->loadTemplate($idJuego);
-
-            echo $template -> render($template_data2);
+        }
+        else {
+          echo "Juego no soportado";
         }
 
     }
@@ -73,10 +73,18 @@ class ApiHandler {
     	//return;
     }
 }
+class ImageHandler {
+  function get() {
+    $name_image = $_GET["imagen"];
+    header('Content-Type: image/jpeg');
+    echo(readfile('img/'.$name_image));
+  }
+}
 
 
 Toro::serve(array(
     "/" => "HelloHandler",
     "/stats" => "ApiHandler",
+    "/static" => "ImageHandler",
 ));
 ?>
