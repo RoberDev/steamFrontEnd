@@ -1,4 +1,4 @@
-#STEAM FRONT-END
+# STEAM FRONT-END
 
 You need to init the php server with your own steam key.
 

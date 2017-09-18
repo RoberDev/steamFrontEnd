@@ -81,7 +81,6 @@ class ImageHandler {
   }
 }
 
-
 Toro::serve(array(
     "/" => "HelloHandler",
     "/stats" => "ApiHandler",
